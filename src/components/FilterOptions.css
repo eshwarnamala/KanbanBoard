@@ -1,18 +1,50 @@
-.filter-options {
-    display: flex;
-    margin-bottom: 20px;
-  }
+.filter-options-container {
+  position: relative;
+  display: inline-block; /* Allows positioning relative to the container */
   
-  .filter-group, .filter-sort {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  label {
-    margin-bottom: 5px;
-  }
-
-.card{
-  margin: 10px;
 }
+
+.filter-options {
+  display: none; /* Initially hidden */
+  position: absolute;
+  top: 100%; /* Appears below the Display button */
+  left: 0;
+  background-color: #ffffff;
+  padding: 10px;
+  border: 1px solid #ffffff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+  width: 200px;
+  padding: 10px 10px 0px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.show-filter-options {
+  display: block; /* Show the filter options when triggered */
+}
+
+.filter-group, .filter-sort {
+  margin-bottom: 10px; /* Space between dropdowns */
+  display: flex;
+  justify-content: space-between;
   
+}
+
+label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+button {
+  padding: 10px;
+  cursor: pointer;
+  border: none;
+  background-color: white;
+}
+select {
+  cursor: pointer;
+}

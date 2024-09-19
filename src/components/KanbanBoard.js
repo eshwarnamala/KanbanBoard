@@ -4,15 +4,15 @@ import FilterOptions from './FilterOptions';
 import KanbanColumn from './KanbanColumn';
 import { groupTickets } from '../utils/helpers';
 import './KanbanBoard.css';
+import DisplayIcon from '../icons_FEtask/Display.svg';
+import Down from '../icons_FEtask/down.svg';
 
 const KanbanBoard = () => {
   const [tickets, setTickets] = useState([]);
   const [users, setUsers] = useState([]);
   const [grouping, setGrouping] = useState(localStorage.getItem('grouping') || 'status');
   const [sorting, setSorting] = useState(localStorage.getItem('sorting') || 'priority');
-
-  
-
+  const [showFilters, setShowFilters] = useState(false); // State to control filter visibility
 
   // Fetch tickets and users from API
   useEffect(() => {
@@ -34,21 +34,6 @@ const KanbanBoard = () => {
     localStorage.setItem('sorting', sorting);
   }, [sorting]);
 
-  useEffect(() => {
-    const savedGrouping = localStorage.getItem('grouping');
-    const savedSorting = localStorage.getItem('sorting');
-    
-    if (savedGrouping) {
-      setGrouping(savedGrouping);
-    }
-    
-    if (savedSorting) {
-      setSorting(savedSorting);
-    }
-  }, []);
-  
-  
-
   // Handle Grouping Change
   const handleGroupingChange = (groupBy) => {
     setGrouping(groupBy);
@@ -60,7 +45,7 @@ const KanbanBoard = () => {
     setSorting(sortBy);
     localStorage.setItem('sorting', sortBy);
   };
-
+  
   // Sort tickets based on priority or title
   const sortedTickets = [...tickets].sort((a, b) => {
     if (sorting === 'priority') {
@@ -74,13 +59,23 @@ const KanbanBoard = () => {
   // Group tickets based on selected grouping option
   const groupedTickets = groupTickets(sortedTickets, grouping, users);
 
+  // Toggle Filter visibility
+  const toggleFilters = () => {
+    setShowFilters(!showFilters);
+  };
+
+  
+
   return (
     <div className="kanban-board">
+      <div className='header'>
+      <span><img src={DisplayIcon}/><button onClick={toggleFilters}>Display</button> <img src={Down}/> </span> </div>
       <FilterOptions 
         grouping={grouping} 
         onGroupingChange={handleGroupingChange} 
         sorting={sorting} 
         onSortingChange={handleSortingChange} 
+        show={showFilters} // Pass the visibility state as a prop
       />
       <div className="kanban-columns">
         {Object.keys(groupedTickets).map(group => (

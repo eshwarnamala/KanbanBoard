@@ -79,3 +79,7 @@
 .card-title p{
   margin: 0;
 }
+.card {
+  margin-bottom: 15px;
+    margin-top: 10px;
+}
